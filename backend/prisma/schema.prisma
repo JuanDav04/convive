@@ -1,18 +1,4 @@
 // schema.prisma — Convive (observador convivencial digital)
-//
-// Esquema para Prisma 7. Diferencias con el borrador anterior:
-//   - La URL de la base de datos ya NO va aquí: está en prisma.config.ts
-//     (así lo exige Prisma 7).
-//   - Se agregó Case.closedAt para saber cuándo se cerró un caso.
-//
-// Equivalencias con lo que el frontend guardaba en localStorage:
-//   conviveCasos          -> Case
-//   conviveSeguimientos   -> CaseFollowUp
-//   conviveCompromisos    -> Commitment
-//   conviveObservaciones  -> Observation
-//   conviveAsistencias    -> Attendance
-//   conviveDocumentos / IndexedDB -> Document
-//   data/students.js      -> Student
 
 generator client {
   provider = "prisma-client-js"
@@ -108,7 +94,7 @@ model Student {
   code      String   @unique // el "ID" visible del estudiante (6001, 6002...)
   fullName  String
   grade     Grade
-  group     Int // 1..4 (se valida en la API)
+  group     Int // 1..4 - se valida en la API
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
 
@@ -142,14 +128,14 @@ model Case {
   documents   Document[]
 
   // La reincidencia se calcula contando casos del estudiante en una ventana
-  // de tiempo; este índice hace rápida esa consulta.
+  // este índice hace rápida esa consulta.
   @@index([studentId, date])
   @@index([status])
   @@index([severity])
 }
 
-// Historial de cambios de los casos. Lo escribe un TRIGGER de PostgreSQL (ver
-// prisma/migrations/*_logica_sql); la API solo lo lee. Sin relación a propósito:
+// Historial de cambios de los casos el cual, lo escribe un TRIGGER de PostgreSQL
+// la API solo lo lee
 // debe sobrevivir si se borra el caso.
 model CaseAudit {
   id        Int         @id @default(autoincrement())
@@ -223,11 +209,7 @@ model Attendance {
   @@index([date])
 }
 
-// Une dos cosas que en el frontend estaban separadas:
-//  - documentos del estudiante  -> studentId, sin caseId
-//  - evidencias de un caso      -> caseId, type EVIDENCIA
-// El archivo NO va en la base de datos: solo se guarda su nombre interno
-// en storageKey (el archivo vive en la carpeta de subidas).
+// el archivo vive en la carpeta de subidas
 model Document {
   id           Int          @id @default(autoincrement())
   studentId    Int?
