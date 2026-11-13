@@ -1,8 +1,5 @@
-// prisma/seed.js — datos iniciales (se puede correr varias veces sin duplicar).
-//   npm run db:seed
-// - Siempre: el usuario admin.
-// - Si SEED_DEMO_DATA=true (en producción exige SEED_DEMO_PASSWORD): coordinador, docente, estudiantes
-//   y algunos casos de ejemplo (uno reincidente para ver la alerta).
+// prisma/seed.js — datos iniciales
+
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -11,8 +8,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 
 const isProduction = process.env.NODE_ENV === "production";
-// Los datos demo se piden de forma explícita (también en producción, para que el
-// profesor pueda entrar a la demo en línea). En producción exigen su propia clave.
+// Los datos demo se piden de forma explícita 
 const withDemo = process.env.SEED_DEMO_DATA === "true";
 const demoPassword = process.env.SEED_DEMO_PASSWORD;
 
@@ -28,7 +24,7 @@ if (isProduction && adminPassword.length < 12) {
     process.exit(1);
 }
 
-// Crea el usuario solo si no existe (no pisa contraseñas ya cambiadas).
+// Crea el usuario solo si no existe
 async function ensureUser({ username, password, fullName, role }) {
     return prisma.user.upsert({
         where: { username },
