@@ -1,10 +1,5 @@
--- ============================================================================
--- Lógica en PostgreSQL: tabla de auditoría, triggers, función y procedimiento.
--- (Se ejecuta con `prisma migrate dev/deploy`, después de la migración inicial.)
--- ============================================================================
-
--- ─── 1. Tabla de auditoría (la llenan los triggers; nadie la edita) ──────────
--- Sin llave foránea a propósito: el historial debe sobrevivir si se borra el caso.
+-- ─── 1. Tabla de auditoría
+ 
 CREATE TABLE "CaseAudit" (
     "id" SERIAL NOT NULL,
     "caseId" INTEGER NOT NULL,
@@ -20,7 +15,7 @@ CREATE TABLE "CaseAudit" (
 CREATE INDEX "CaseAudit_caseId_idx" ON "CaseAudit"("caseId");
 
 -- ─── 2. FUNCIONES ────────────────────────────────────────────────────────────
--- Cuenta los casos de un estudiante desde una fecha (la usa la API para la reincidencia).
+-- Cuenta los casos de un estudiante desde una fecha
 CREATE OR REPLACE FUNCTION fn_contar_casos_desde(p_student_id integer, p_desde date)
 RETURNS integer
 LANGUAGE sql
@@ -32,7 +27,7 @@ AS $$
       AND "date" >= p_desde;
 $$;
 
--- ¿Es reincidente? (p_minimo o más casos desde p_desde)
+-- ¿Es reincidente? - p_minimo o más casos desde p_desde
 CREATE OR REPLACE FUNCTION fn_es_reincidente(p_student_id integer, p_desde date, p_minimo integer)
 RETURNS boolean
 LANGUAGE sql
@@ -43,7 +38,7 @@ $$;
 
 -- ─── 3. TRIGGER DE VALIDACIÓN sobre "Case" ───────────────────────────────────
 -- Antes de guardar un caso: el título no puede quedar vacío y closedAt debe ser
--- coherente con el estado (CERRADO => tiene fecha de cierre; otro estado => no).
+-- coherente con el estado
 CREATE OR REPLACE FUNCTION fn_case_validar()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -73,7 +68,7 @@ CREATE TRIGGER trg_case_validar
 -- ─── 4. TRIGGER DE AUDITORÍA sobre "Case" ────────────────────────────────────
 -- Después de crear, cambiar de estado, editar o borrar un caso, guarda una fila
 -- en "CaseAudit". Quién lo hizo llega por la variable de sesión convive.user_id
--- (la API la fija dentro de la misma transacción); si no llega, queda NULL.
+-- la API la fija dentro de la misma transacción, si no llega, queda NULL.
 CREATE OR REPLACE FUNCTION fn_case_auditar()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -149,7 +144,7 @@ CREATE TRIGGER trg_asistencia_validar
 --   1) bloquea la fila del caso (SELECT ... FOR UPDATE): control de concurrencia;
 --      si dos personas cierran el mismo caso a la vez, la segunda espera y luego
 --      ve que ya está cerrado.
---   2) cambia el estado a CERRADO (los triggers validan y auditan),
+--   2) cambia el estado a CERRADO los triggers validan y auditan,
 --   3) registra un seguimiento automático.
 -- p_resultado (salida): 'OK' | 'YA_CERRADO' | 'NO_EXISTE'
 CREATE OR REPLACE PROCEDURE sp_cerrar_caso(
