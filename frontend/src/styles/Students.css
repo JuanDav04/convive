@@ -1,0 +1,155 @@
+
+.students-page {
+    padding: 30px;
+}
+
+.students-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.students-heading {
+    min-width: 0;
+}
+
+.students-heading h1 {
+    margin: 0 0 8px;
+    color: #1f2a5a;
+    font-size: 26px;
+}
+
+.students-heading p {
+    margin: 0;
+    color: #667085;
+    line-height: 1.5;
+}
+
+.students-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.course-action {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 11px 16px;
+    border: 1px solid #4c55d8;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.attendance-action {
+    background: #4c55d8;
+    color: white;
+}
+
+.attendance-action:hover {
+    background: #3f47c4;
+    transform: translateY(-1px);
+}
+
+.reports-action {
+    background: white;
+    color: #4c55d8;
+}
+
+.reports-action:hover {
+    background: #eef0ff;
+    transform: translateY(-1px);
+}
+
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+.student-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.student-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.student-avatar {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e9ecff;
+    font-size: 45px;
+}
+
+.student-card h3 {
+    margin: 0 0 8px;
+    color: #1f2a5a;
+}
+
+.student-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #667085;
+}
+
+.students-empty {
+    grid-column: 1 / -1;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    color: #667085;
+}
+
+@media (max-width: 900px) {
+    .students-header {
+        flex-direction: column;
+    }
+
+    .students-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .students-page {
+        padding: 20px;
+    }
+
+    .students-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .course-action {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .students-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 14px;
+    }
+}

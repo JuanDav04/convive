@@ -1,0 +1,46 @@
+.navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    background: #4c55d8;
+    color: white;
+}
+
+.navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-search input {
+    width: 360px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-logout {
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.navbar-logout:hover {
+    background: rgba(255, 255, 255, 0.15);
+}

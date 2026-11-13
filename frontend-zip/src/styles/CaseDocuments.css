@@ -1,0 +1,105 @@
+/*CaseDocuments.css*/
+.case-documents-description {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.case-documents-upload {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 11px 16px;
+    border-radius: 8px;
+    background: #4c55d8;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.case-documents-upload:hover {
+    background: #3f47c4;
+}
+
+.case-documents-upload input {
+    display: none;
+}
+
+.case-documents-message {
+    margin-top: 12px;
+    color: #4c55d8;
+    font-size: 14px;
+}
+
+.case-documents-empty {
+    margin-top: 18px;
+    color: #6b7280;
+}
+
+.case-documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.case-document-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #f7f8fc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.case-document-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.case-document-info strong {
+    color: #20254d;
+    overflow-wrap: anywhere;
+}
+
+.case-document-info span {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.case-document-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.case-document-actions button {
+    padding: 8px 11px;
+    border: 1px solid #4c55d8;
+    border-radius: 7px;
+    background: white;
+    color: #4c55d8;
+    cursor: pointer;
+}
+
+.case-document-actions button:hover {
+    background: #eef0ff;
+}
+
+.case-document-actions .case-document-delete {
+    border-color: #fecaca;
+    color: #b42318;
+}
+
+.case-document-actions .case-document-delete:hover {
+    background: #fee2e2;
+}
+
+@media (max-width: 600px) {
+    .case-document-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

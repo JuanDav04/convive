@@ -1,0 +1,20 @@
+# PostgreSQL 16 para desarrollo: una BD para la app (convive) y otra para las
+# pruebas automáticas (convive_test, la crea docker/init-test-db.sql).
+# Uso:  docker compose up -d      (apagar: docker compose down)
+services:
+  db:
+    image: postgres:16
+    container_name: convive-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: convive
+      POSTGRES_PASSWORD: convive
+      POSTGRES_DB: convive
+    ports:
+      - "5432:5432"
+    volumes:
+      - convive-pgdata:/var/lib/postgresql/data
+      - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+
+volumes:
+  convive-pgdata:

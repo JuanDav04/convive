@@ -1,0 +1,96 @@
+.navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    background: #4c55d8;
+    color: white;
+}
+
+.navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.student-search {
+    position: relative;
+    width: 360px;
+    max-width: 100%;
+}
+
+.student-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+}
+
+.student-search input:focus-visible {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55);
+}
+
+.student-search-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: white;
+    color: #1f2433;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+.student-search-option {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.student-search-option span {
+    font-size: 13px;
+    color: #5b6275;
+}
+
+.student-search-option.active {
+    background: #eceefc;
+}
+
+.student-search-note {
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #5b6275;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar-logout {
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.navbar-logout:hover {
+    background: rgba(255, 255, 255, 0.15);
+}

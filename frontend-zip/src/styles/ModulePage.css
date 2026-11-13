@@ -1,0 +1,37 @@
+
+.module-page {
+    padding: 30px;
+}
+
+.module-card {
+    max-width: 850px;
+    padding: 28px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.module-card h1 {
+    margin: 0 0 16px;
+    color: #1f2a5a;
+}
+
+.module-card p {
+    color: #667085;
+    line-height: 1.7;
+}
+
+.module-back-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 11px 16px;
+    border-radius: 8px;
+    background: #4c55d8;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.module-back-link:hover {
+    background: #3f47c4;
+}

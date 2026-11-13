@@ -1,0 +1,79 @@
+.sidebar {
+    width: 220px;
+    padding: 30px 20px;
+    background: white;
+    border-right: 1px solid #e1e3ee;
+}
+
+.sidebar h2 {
+    margin: 0 0 25px;
+    color: #4c55d8;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar a {
+    padding: 12px 14px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.sidebar a:hover {
+    background: #eef0ff;
+    color: #4c55d8;
+}
+
+.course-button {
+    width: 100%;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: #333;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.course-button:hover {
+    background: #eef0ff;
+    color: #4c55d8;
+}
+
+.groups {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+    padding-left: 12px;
+}
+
+.groups button,
+.groups a {
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    color: #555;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.groups button:hover,
+.groups a:hover {
+    background: #eef0ff;
+    color: #4c55d8;
+}

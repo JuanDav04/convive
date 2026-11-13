@@ -1,0 +1,149 @@
+.follow-up {
+    min-height: 100vh;
+    padding: 40px;
+    background: #f5f6ff;
+}
+
+.follow-up-card {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.follow-up-header h1 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.follow-up-header p {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #4c55d8;
+}
+
+.follow-up-header span {
+    color: #666;
+    font-size: 14px;
+}
+
+.follow-up-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.follow-up-section h2 {
+    margin-top: 0;
+    color: #4c55d8;
+}
+
+.follow-up-section p {
+    color: #666;
+}
+
+.new-case-button {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 24px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #4c55d8;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.new-case-button:hover {
+    background: #3f47c4;
+}
+
+.cases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.case-card {
+    padding: 20px;
+    border: 1px solid #e1e3ee;
+    border-radius: 10px;
+    background: #fafbff;
+}
+
+.case-card h3 {
+    margin-top: 0;
+    color: #4c55d8;
+}
+
+.case-card p {
+    margin: 8px 0;
+}
+
+.view-case-button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #eef0ff;
+    color: #4c55d8;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.view-case-button:hover {
+    background: #dfe3ff;
+}
+
+.case-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.case-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+}
+
+.case-status-abierto::before {
+    background: #22c55e;
+}
+
+.case-status-seguimiento::before {
+    background: #f59e0b;
+}
+
+.case-status-cerrado::before {
+    background: #ef4444;
+}
+
+.case-status {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-abierto {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-seguimiento {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-cerrado {
+    background: #fee2e2;
+    color: #991b1b;
+}

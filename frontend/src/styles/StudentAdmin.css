@@ -1,0 +1,73 @@
+/* Gestión de estudiantes: formulario, botones de curso y perfil */
+.case-form label.student-active-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.case-form .student-active-field input {
+    width: auto;
+    padding: 0;
+}
+
+.form-error {
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 14px;
+}
+
+.add-student-action {
+    background: white;
+    color: #166534;
+    border-color: #16a34a;
+}
+
+.add-student-action:hover {
+    background: #dcfce7;
+    transform: translateY(-1px);
+}
+
+.show-inactive-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #475467;
+    cursor: pointer;
+}
+
+.student-inactive-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 12px;
+}
+
+.student-card.is-inactive {
+    opacity: 0.7;
+}
+
+.edit-student-link {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 9px 14px;
+    border-radius: 8px;
+    background: #4c55d8;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.edit-student-link:hover {
+    background: #3f47c4;
+}

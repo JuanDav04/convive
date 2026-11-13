@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.local
+dist/
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/uploads-test/

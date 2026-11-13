@@ -1,0 +1,250 @@
+// schema.prisma — Convive (observador convivencial digital)
+//
+// Esquema para Prisma 7. Diferencias con el borrador anterior:
+//   - La URL de la base de datos ya NO va aquí: está en prisma.config.ts
+//     (así lo exige Prisma 7).
+//   - Se agregó Case.closedAt para saber cuándo se cerró un caso.
+//
+// Equivalencias con lo que el frontend guardaba en localStorage:
+//   conviveCasos          -> Case
+//   conviveSeguimientos   -> CaseFollowUp
+//   conviveCompromisos    -> Commitment
+//   conviveObservaciones  -> Observation
+//   conviveAsistencias    -> Attendance
+//   conviveDocumentos / IndexedDB -> Document
+//   data/students.js      -> Student
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────────────────── Enums ─────────────────────────
+
+enum Role {
+  ADMIN
+  COORDINADOR
+  DOCENTE
+}
+
+enum Grade {
+  QUINTO
+  NOVENO
+}
+
+// Categoría de la situación.
+enum CaseCategory {
+  CONVIVENCIA
+  ACADEMICO
+  OTRO
+}
+
+// Clasificación de gravedad según el Decreto 1965 de 2013 (Ley 1620).
+enum Severity {
+  TIPO_I
+  TIPO_II
+  TIPO_III
+}
+
+enum CaseStatus {
+  ABIERTO
+  SEGUIMIENTO
+  CERRADO
+}
+
+enum ObservationType {
+  CONVIVENCIA
+  ACADEMICA
+  COMPORTAMIENTO
+  OTRA
+}
+
+enum AttendanceStatus {
+  PRESENTE
+  AUSENTE
+  TARDE
+  JUSTIFICADA
+}
+
+enum DocumentType {
+  OBSERVADOR
+  COMPROMISO
+  INFORME
+  AUTORIZACION
+  EVIDENCIA
+  OTRO
+}
+
+enum CommitmentStatus {
+  PENDIENTE
+  CUMPLIDO
+  INCUMPLIDO
+}
+
+// ───────────────────────── Modelos ─────────────────────────
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String // nunca se guarda la contraseña en texto plano
+  fullName     String
+  role         Role     @default(DOCENTE)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  cases        Case[]
+  followUps    CaseFollowUp[]
+  observations Observation[]
+  attendances  Attendance[]
+  documents    Document[]
+  commitments  Commitment[]
+}
+
+model Student {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique // el "ID" visible del estudiante (6001, 6002...)
+  fullName  String
+  grade     Grade
+  group     Int // 1..4 (se valida en la API)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  cases        Case[]
+  observations Observation[]
+  attendances  Attendance[]
+  documents    Document[]
+
+  @@index([grade, group])
+}
+
+model Case {
+  id          Int          @id @default(autoincrement())
+  studentId   Int
+  title       String
+  category    CaseCategory
+  severity    Severity     @default(TIPO_I)
+  date        DateTime     @db.Date
+  description String       @db.Text
+  actions     String?      @db.Text // "Acciones realizadas"
+  status      CaseStatus   @default(ABIERTO)
+  closedAt    DateTime?
+  createdById Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  student     Student        @relation(fields: [studentId], references: [id])
+  createdBy   User           @relation(fields: [createdById], references: [id])
+  followUps   CaseFollowUp[]
+  commitments Commitment[]
+  documents   Document[]
+
+  // La reincidencia se calcula contando casos del estudiante en una ventana
+  // de tiempo; este índice hace rápida esa consulta.
+  @@index([studentId, date])
+  @@index([status])
+  @@index([severity])
+}
+
+// Historial de cambios de los casos. Lo escribe un TRIGGER de PostgreSQL (ver
+// prisma/migrations/*_logica_sql); la API solo lo lee. Sin relación a propósito:
+// debe sobrevivir si se borra el caso.
+model CaseAudit {
+  id        Int         @id @default(autoincrement())
+  caseId    Int
+  action    String // CREADO | ESTADO | EDITADO | ELIMINADO
+  oldStatus CaseStatus?
+  newStatus CaseStatus?
+  changedBy Int?
+  changedAt DateTime    @default(now())
+
+  @@index([caseId])
+}
+
+model CaseFollowUp {
+  id            Int      @id @default(autoincrement())
+  caseId        Int
+  date          DateTime @db.Date
+  description   String   @db.Text
+  responsibleId Int
+  createdAt     DateTime @default(now())
+
+  case        Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  responsible User @relation(fields: [responsibleId], references: [id])
+
+  @@index([caseId])
+}
+
+model Commitment {
+  id            Int              @id @default(autoincrement())
+  caseId        Int
+  description   String           @db.Text
+  dueDate       DateTime?        @db.Date
+  status        CommitmentStatus @default(PENDIENTE)
+  responsibleId Int
+  createdAt     DateTime         @default(now())
+
+  case        Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  responsible User @relation(fields: [responsibleId], references: [id])
+
+  @@index([caseId])
+}
+
+model Observation {
+  id            Int             @id @default(autoincrement())
+  studentId     Int
+  type          ObservationType @default(CONVIVENCIA)
+  description   String          @db.Text
+  date          DateTime        @db.Date
+  responsibleId Int
+  createdAt     DateTime        @default(now())
+
+  student     Student @relation(fields: [studentId], references: [id])
+  responsible User    @relation(fields: [responsibleId], references: [id])
+
+  @@index([studentId, date])
+}
+
+model Attendance {
+  id           Int              @id @default(autoincrement())
+  studentId    Int
+  date         DateTime         @db.Date
+  status       AttendanceStatus
+  registeredBy Int
+  createdAt    DateTime         @default(now())
+
+  student Student @relation(fields: [studentId], references: [id])
+  user    User    @relation(fields: [registeredBy], references: [id])
+
+  // Un estudiante tiene un solo registro por día.
+  @@unique([studentId, date])
+  @@index([date])
+}
+
+// Une dos cosas que en el frontend estaban separadas:
+//  - documentos del estudiante  -> studentId, sin caseId
+//  - evidencias de un caso      -> caseId, type EVIDENCIA
+// El archivo NO va en la base de datos: solo se guarda su nombre interno
+// en storageKey (el archivo vive en la carpeta de subidas).
+model Document {
+  id           Int          @id @default(autoincrement())
+  studentId    Int?
+  caseId       Int?
+  type         DocumentType
+  name         String
+  description  String?      @db.Text
+  mimeType     String?
+  sizeBytes    Int?
+  storageKey   String?
+  uploadedById Int
+  createdAt    DateTime     @default(now())
+
+  student    Student? @relation(fields: [studentId], references: [id])
+  case       Case?    @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  uploadedBy User     @relation(fields: [uploadedById], references: [id])
+
+  @@index([studentId])
+  @@index([caseId])
+}

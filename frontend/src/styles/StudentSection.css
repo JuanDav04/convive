@@ -1,0 +1,25 @@
+.student-section-page {
+    padding: 28px 32px;
+}
+
+.student-section-page h1 {
+    margin: 0 0 8px;
+    color: #20254d;
+}
+
+.student-section-page > p {
+    color: #6b7280;
+}
+
+.empty-section {
+    margin-top: 24px;
+    padding: 24px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.empty-section p {
+    margin: 0;
+    color: #6b7280;
+}
