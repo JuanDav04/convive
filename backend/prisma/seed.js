@@ -1,7 +1,7 @@
 // prisma/seed.js — datos iniciales (se puede correr varias veces sin duplicar).
 //   npm run db:seed
 // - Siempre: el usuario admin.
-// - Si SEED_DEMO_DATA=true y NO es producción: coordinador, docente, estudiantes
+// - Si SEED_DEMO_DATA=true (en producción exige SEED_DEMO_PASSWORD): coordinador, docente, estudiantes
 //   y algunos casos de ejemplo (uno reincidente para ver la alerta).
 import "dotenv/config";
 import bcrypt from "bcryptjs";
@@ -11,7 +11,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 
 const isProduction = process.env.NODE_ENV === "production";
-const withDemo = process.env.SEED_DEMO_DATA === "true" && !isProduction;
+// Los datos demo se piden de forma explícita (también en producción, para que el
+// profesor pueda entrar a la demo en línea). En producción exigen su propia clave.
+const withDemo = process.env.SEED_DEMO_DATA === "true";
+const demoPassword = process.env.SEED_DEMO_PASSWORD;
+
+if (isProduction && withDemo && (demoPassword ?? "").length < 8) {
+    console.error("En producción con SEED_DEMO_DATA=true define SEED_DEMO_PASSWORD con al menos 8 caracteres.");
+    process.exit(1);
+}
 
 const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? (isProduction ? "" : "admin123");
 
@@ -41,8 +49,8 @@ try {
     console.log("✔ usuario admin listo");
 
     if (withDemo) {
-        const coordinator = await ensureUser({ username: "coordinador", password: "coord123", fullName: "Coordinador", role: "COORDINADOR" });
-        await ensureUser({ username: "docente", password: "docente123", fullName: "Docente", role: "DOCENTE" });
+        const coordinator = await ensureUser({ username: "coordinador", password: demoPassword ?? "coord123", fullName: "Coordinador", role: "COORDINADOR" });
+        await ensureUser({ username: "docente", password: demoPassword ?? "docente123", fullName: "Docente", role: "DOCENTE" });
 
         const students = [
             { code: "6001", fullName: "Juan David Ramirez Lopez", grade: "QUINTO", group: 1 },
@@ -73,7 +81,7 @@ try {
             });
         }
 
-        console.log("✔ datos de demostración listos (usuarios: admin/admin123, coordinador/coord123, docente/docente123)");
+        console.log(demoPassword ? "✔ datos de demostración listos (usuarios: coordinador y docente con SEED_DEMO_PASSWORD)" : "✔ datos de demostración listos (usuarios: admin/admin123, coordinador/coord123, docente/docente123)");
     }
 } finally {
     await prisma.$disconnect();

@@ -1,0 +1,50 @@
+# render.yaml — Blueprint de Render: 1 base de datos PostgreSQL + 1 servicio web.
+# El backend (Express) también sirve el build del frontend, así que hay UNA sola
+# URL pública y no hace falta CORS.
+databases:
+  - name: convive-db
+    plan: free
+    databaseName: convive
+    user: convive
+
+services:
+  - type: web
+    name: convive
+    runtime: node
+    plan: free
+    # --include=dev: Render pone NODE_ENV=production y sin esto no instalaría
+    # vite ni prisma (están en devDependencies).
+    buildCommand: >-
+      npm --prefix frontend ci --include=dev &&
+      npm --prefix frontend run build &&
+      npm --prefix backend ci --include=dev &&
+      npm --prefix backend run db:generate
+    # Migraciones (tablas, triggers, función, procedimiento) + datos iniciales + servidor.
+    # El seed no duplica nada, así que puede correr en cada arranque.
+    startCommand: cd backend && npx prisma migrate deploy && npm run db:seed && node src/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: convive-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_DIST
+        value: ../frontend/dist
+      # La API vive en el mismo dominio: ruta relativa (se fija al compilar el frontend).
+      - key: VITE_API_URL
+        value: /api
+      - key: VITE_MAX_UPLOAD_MB
+        value: 10
+      # Render te las pide al crear el Blueprint (no quedan escritas en el repo):
+      - key: SEED_ADMIN_PASSWORD   # mínimo 12 caracteres
+        sync: false
+      - key: SEED_DEMO_PASSWORD    # clave de coordinador y docente de la demo (mínimo 8)
+        sync: false
+      - key: SEED_DEMO_DATA
+        value: true

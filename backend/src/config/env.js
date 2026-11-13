@@ -15,6 +15,9 @@ const schema = z.object({
     JWT_EXPIRES_IN: z.string().default("8h"),
     APP_TIMEZONE: z.string().default("America/Bogota"),
     UPLOAD_DIR: z.string().default("uploads"),
+    // Carpeta con el build del frontend (vite build). Si existe, el backend la sirve
+    // y todo queda en un solo servicio/URL (sin CORS). Vacío = solo API.
+    FRONTEND_DIST: z.string().optional(),
     MAX_UPLOAD_MB: z.coerce.number().positive().default(10),
     REINCIDENCE_MIN_CASES: z.coerce.number().int().positive().default(3),
     REINCIDENCE_WINDOW_DAYS: z.coerce.number().int().positive().default(90),
@@ -40,5 +43,6 @@ export const env = {
     isTest: raw.NODE_ENV === "test",
     corsOrigins: raw.CORS_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean),
     uploadDir: path.resolve(raw.UPLOAD_DIR),
+    frontendDist: raw.FRONTEND_DIST ? path.resolve(raw.FRONTEND_DIST) : null,
     maxUploadBytes: Math.round(raw.MAX_UPLOAD_MB * 1024 * 1024),
 };
