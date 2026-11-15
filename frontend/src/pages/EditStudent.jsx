@@ -26,7 +26,7 @@ function EditStudent() {
     async function handleUpdate(values) {
         await estudiantes.update(student.id, values);
 
-        navigate(`/estudiante/${student.id}`);
+        navigate(`/estudiante/${student.id}`, { replace: true });
     }
 
     return (

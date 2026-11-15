@@ -105,9 +105,6 @@ function Reports() {
                     </p>
                 </div>
 
-                <Link to={`/curso/${grado}/${grupo}`} className="module-back-link">
-                    Volver al curso
-                </Link>
             </header>
 
             <section className="reports-panel">

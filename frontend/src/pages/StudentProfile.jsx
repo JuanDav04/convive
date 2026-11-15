@@ -54,10 +54,6 @@ function StudentProfile() {
         <section className="student-profile-page">
             <div className="student-profile-top">
                 <div className="student-profile-title">
-                    <Link to="/dashboard" className="back-arrow">
-                        ←
-                    </Link>
-
                     <h1>Perfil del estudiante</h1>
                 </div>
             </div>

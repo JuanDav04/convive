@@ -18,7 +18,7 @@ function NewStudent() {
     async function handleCreate(values) {
         const created = await estudiantes.create(values);
 
-        navigate(`/estudiante/${created.id}`);
+        navigate(`/estudiante/${created.id}`, { replace: true });
     }
 
     return (

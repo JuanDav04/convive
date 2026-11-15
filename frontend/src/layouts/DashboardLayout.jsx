@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import "../styles/DashboardLayout.css";
@@ -14,6 +15,7 @@ function DashboardLayout() {
                 <Sidebar />
 
                 <main className="dashboard-layout-content">
+                    <BackButton />
                     <Outlet />
                 </main>
 

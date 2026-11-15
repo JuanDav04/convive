@@ -12,3 +12,33 @@
     flex: 1;
     min-width: 0;
 }
+
+/* Botón "Volver" global (sobre el contenido de cada pantalla interna) */
+.back-bar {
+    padding: 14px 32px 0;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid #d5d9f7;
+    border-radius: 8px;
+    background: white;
+    color: #4c55d8;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-button:hover {
+    background: #eef0ff;
+    box-shadow: 0 2px 8px rgba(76, 85, 216, 0.15);
+}
+
+.back-button:focus-visible {
+    outline: 3px solid rgba(76, 85, 216, 0.4);
+    outline-offset: 2px;
+}

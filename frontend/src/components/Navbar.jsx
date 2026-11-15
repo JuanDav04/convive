@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { labelOf } from "../constants/enums";
 import * as auth from "../services/auth";
 import StudentSearch from "./StudentSearch";
@@ -15,9 +15,9 @@ function Navbar() {
 
     return (
         <header className="navbar">
-            <div className="navbar-brand">
-                <span>CONVIVE</span>
-            </div>
+            <Link to="/dashboard" className="navbar-brand" title="Ir al inicio" aria-label="Convive: ir al inicio">
+                CONVIVE
+            </Link>
 
             <StudentSearch />
 

@@ -35,7 +35,7 @@ function EditCase() {
         await casos.update(caso.id, { ...values, expectedUpdatedAt: caso.updatedAt });
 
         alert("Caso actualizado correctamente.");
-        navigate(detailUrl);
+        navigate(detailUrl, { replace: true });
     }
 
     return (

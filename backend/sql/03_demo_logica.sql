@@ -1,9 +1,5 @@
--- ============================================================================
 -- DEMOSTRACIÓN de triggers, funciones, procedimiento y transacciones.
--- Es AUTOCONTENIDO y no deja rastro: todo ocurre dentro de una transacción que
--- termina en ROLLBACK. Úsalo para las capturas del informe:
---     psql "$DATABASE_URL" -f sql/03_demo_logica.sql
--- ============================================================================
+
 \set ON_ERROR_STOP off
 \pset pager off
 BEGIN;

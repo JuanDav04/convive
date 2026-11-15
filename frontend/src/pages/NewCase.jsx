@@ -23,7 +23,7 @@ function NewCase() {
         await casos.create({ ...values, studentId: student.id });
 
         alert("Caso registrado correctamente.");
-        navigate(`/estudiante/${student.id}/seguimiento`);
+        navigate(`/estudiante/${student.id}/seguimiento`, { replace: true });
     }
 
     return (

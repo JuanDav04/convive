@@ -134,10 +134,6 @@ function CaseDetail() {
     return (
         <section className="case-detail-page">
             <div className="case-detail-card">
-                <Link to={`/estudiante/${student.id}/seguimiento`} className="back-link">
-                    ← Volver al seguimiento
-                </Link>
-
                 <h1>{caso.title}</h1>
 
                 <div className="case-info">

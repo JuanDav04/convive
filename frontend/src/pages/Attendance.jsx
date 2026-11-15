@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { optionsOf } from "../constants/enums";
 import { useAsync } from "../hooks/useAsync";
@@ -83,9 +83,6 @@ function Attendance() {
                     <p>Curso: {course.label}</p>
                 </div>
 
-                <Link to={`/curso/${grado}/${grupo}`} className="attendance-back-link">
-                    Volver al curso
-                </Link>
             </header>
 
             <section className="attendance-panel">
