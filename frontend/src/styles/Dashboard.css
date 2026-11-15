@@ -1,14 +1,392 @@
+/* Pantalla de inicio: bienvenida, resumen (solo staff) y accesos a cursos */
 .dashboard-content-page {
-    padding: 40px;
+    padding: 20px 32px 48px;
+    max-width: 1180px;
 }
 
-.dashboard-content-page h1 {
-    margin: 0 0 10px;
-    color: #20254d;
-    font-size: 28px;
+/* ── Bienvenida con el escudo del colegio ─────────────────── */
+.home-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 36px;
+    margin-bottom: 32px;
+    overflow: hidden;
+    background: linear-gradient(120deg, #ffffff 0%, #eef6ff 55%, #e6ebff 100%);
+    border: 1px solid #dfe6fb;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(76, 85, 216, 0.1);
 }
 
-.dashboard-content-page p {
+.home-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, #0b94d6, #4c55d8);
+}
+
+.home-hero-shield {
+    flex: none;
+    height: 168px;
+    width: auto;
+    filter: drop-shadow(0 6px 10px rgba(11, 148, 214, 0.35));
+}
+
+.home-hero-eyebrow {
+    margin: 0 0 6px;
+    color: #0b7fb8;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-hero h1 {
     margin: 0;
+    color: #20254d;
+    font-size: 34px;
+    line-height: 1.15;
+}
+
+.home-hero-date {
+    margin: 8px 0 0;
+    color: #4c55d8;
+    font-weight: 600;
+}
+
+.home-hero-lead {
+    margin: 10px 0 0;
+    max-width: 520px;
+    color: #5b6275;
+    line-height: 1.5;
+}
+
+/* ── Secciones ────────────────────────────────────────────── */
+.home-section {
+    margin-bottom: 36px;
+}
+
+.home-section h2 {
+    margin: 0 0 14px;
+    color: #20254d;
+    font-size: 22px;
+}
+
+.home-section-note {
+    margin: -8px 0 16px;
     color: #6b7280;
+}
+
+.home-error {
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.home-empty {
+    margin: 0;
+    padding: 6px 0;
+    color: #6b7280;
+}
+
+/* ── Tarjetas de cifras ───────────────────────────────────── */
+.home-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.home-stat {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: white;
+    border-radius: 16px;
+    border-left: 6px solid #4c55d8;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.home-stat-blue { border-left-color: #0b94d6; }
+.home-stat-violet { border-left-color: #4c55d8; }
+.home-stat-amber { border-left-color: #f59e0b; }
+
+.home-stat-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: #f1f3ff;
+    font-size: 24px;
+}
+
+.home-stat strong {
+    display: block;
+    color: #20254d;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.home-stat span:not(.home-stat-icon) {
+    display: block;
+    margin-top: 4px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* ── Paneles ──────────────────────────────────────────────── */
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+/* La gráfica (12 meses) y los casos recientes ocupan dos columnas */
+.home-panel-wide {
+    grid-column: span 2;
+}
+
+.home-panel {
+    padding: 20px 22px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    min-width: 0;
+}
+
+.home-panel h3 {
+    margin: 0 0 14px;
+    color: #20254d;
+    font-size: 16px;
+}
+
+/* Gráfica de barras (CSS puro, sin librerías) */
+.home-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 200px;
+    overflow-x: auto;
+}
+
+.home-chart-col {
+    flex: 1 0 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    gap: 6px;
+}
+
+.home-chart-value {
+    color: #20254d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.home-chart-track {
+    flex: 1;
+    width: 100%;
+    max-width: 44px;
+    display: flex;
+    align-items: flex-end;
+    background: #f1f3ff;
+    border-radius: 8px 8px 4px 4px;
+}
+
+.home-chart-bar {
+    width: 100%;
+    min-height: 3px;
+    border-radius: 8px 8px 4px 4px;
+    background: linear-gradient(180deg, #4c55d8, #0b94d6);
+}
+
+.home-chart-label {
+    color: #6b7280;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+/* Barra de estados */
+.home-status-bar {
+    display: flex;
+    gap: 3px;
+    height: 16px;
+    margin: 6px 0 16px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.home-seg-abierto { background: #22c55e; }
+.home-seg-seguimiento { background: #f59e0b; }
+.home-seg-cerrado { background: #ef4444; }
+
+.home-legend {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.home-legend li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #374151;
+}
+
+.home-legend strong {
+    margin-left: auto;
+    color: #20254d;
+}
+
+.home-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Listas (reincidencia y casos recientes) */
+.home-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.home-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+    border-bottom: 1px solid #eef0f6;
+}
+
+.home-list li:last-child {
+    border-bottom: none;
+}
+
+.home-list a {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 8px;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.home-list a:hover,
+.home-list a:focus-visible {
+    background: #f1f3ff;
+}
+
+.home-list-main {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #20254d;
+    font-weight: 600;
+}
+
+.home-list-sub {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.home-badge {
+    flex: none;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.home-badge-alert { background: #fee2e2; color: #991b1b; }
+.home-badge-abierto { background: #dcfce7; color: #166534; }
+.home-badge-seguimiento { background: #fef3c7; color: #92400e; }
+.home-badge-cerrado { background: #fee2e2; color: #991b1b; }
+
+/* ── Accesos a cursos ─────────────────────────────────────── */
+.home-course-row h3 {
+    margin: 18px 0 10px;
+    color: #4c55d8;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.home-course-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 14px;
+}
+
+.home-course {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #e3e7fb;
+    color: #20254d;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.home-course strong {
+    font-size: 18px;
+}
+
+.home-course span {
+    color: #4c55d8;
+    font-size: 13px;
+}
+
+.home-course:hover,
+.home-course:focus-visible {
+    transform: translateY(-3px);
+    border-color: #4c55d8;
+    box-shadow: 0 10px 22px rgba(76, 85, 216, 0.18);
+}
+
+/* ── Pantallas angostas ───────────────────────────────────── */
+@media (max-width: 1000px) {
+    .home-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .home-panel-wide {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 720px) {
+    .dashboard-content-page {
+        padding: 16px 16px 40px;
+    }
+
+    .home-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+    }
+
+    .home-hero-shield {
+        height: 130px;
+    }
+
+    .home-hero h1 {
+        font-size: 26px;
+    }
 }

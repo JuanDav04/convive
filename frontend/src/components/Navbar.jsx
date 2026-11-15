@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import escudoSm from "../assets/escudo-sm.png";
 import { labelOf } from "../constants/enums";
 import * as auth from "../services/auth";
 import StudentSearch from "./StudentSearch";
@@ -16,6 +17,7 @@ function Navbar() {
     return (
         <header className="navbar">
             <Link to="/dashboard" className="navbar-brand" title="Ir al inicio" aria-label="Convive: ir al inicio">
+                <img src={escudoSm} alt="" className="navbar-shield" />
                 CONVIVE
             </Link>
 

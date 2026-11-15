@@ -1,7 +1,8 @@
-import "../styles/Login.css";
 import { useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import escudo from "../assets/escudo.png";
 import * as auth from "../services/auth";
+import "../styles/Login.css";
 
 const REMEMBER_KEY = "convive:v2:rememberedUser";
 
@@ -68,7 +69,7 @@ function Login() {
             {/* Tarjeta principal del formulario */}
             <section className="login-card">
                 <div className="login-header">
-                    <div className="login-icon">👥</div>
+                    <img className="login-shield" src={escudo} alt="Escudo del Colegio Los Periodistas IED" />
 
                     {/* Identidad de la plataforma */}
                     <h1>CONVIVE</h1>

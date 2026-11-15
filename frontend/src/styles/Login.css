@@ -21,9 +21,11 @@
     margin-bottom: 30px;
 }
 
-.login-icon {
-    font-size: 40px;
-    margin-bottom: 5px;
+.login-shield {
+    height: 112px;
+    width: auto;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 8px rgba(11, 148, 214, 0.35));
 }
 
 .login-header h1 {
